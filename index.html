@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Tone</title>
+  <link href="https://fonts.googleapis.com/css?family=Rationale" rel="stylesheet">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="wrapper">
+  <div class="effects-board">
+    <div class="sound-choice-container">
+      <label class="sounds-label">Sounds</label>
+      <section class="sound-type">
+        <div class="sound-selections active" 
+             id="Synth" 
+             onclick="selectSynthType(id)"> 
+          Synth
+        </div>
+        <div class="sound-selections" 
+             id="MonoSynth" 
+             onclick="selectSynthType(id)"> 
+          MonoSynth
+        </div>
+        <div class="sound-selections" 
+             id="AMSynth" 
+             onclick="selectSynthType(id)"> 
+          AMSynth
+        </div>
+        <div class="sound-selections" 
+             id="FMSynth" 
+             onclick="selectSynthType(id)"> 
+          FMSynth
+        </div>
+        <div class="sound-selections" 
+             id="MembraneSynth" 
+             onclick="selectSynthType(id)"> 
+          MembraneSynth
+        </div>
+      </section>
+    </div>
+
+    <div class="oscillator-choice-container">
+      <label class="oscillator-label">Oscillator Type</label>
+      <section class="oscillator-type">
+        <div class="oscillator-selections active" 
+             id="triangle" 
+             onclick="changeOscillator(id)"> 
+          Triangle
+        </div>
+        <div class="oscillator-selections" 
+             id="sine" 
+             onclick="changeOscillator(id)"> 
+          Sine
+        </div>
+        <div class="oscillator-selections" 
+             id="square" 
+             onclick="changeOscillator(id)"> 
+          Square
+        </div>
+        <div class="oscillator-selections" 
+             id="sawtooth" 
+             onclick="changeOscillator(id)"> 
+          SawTooth
+        </div>
+      </section>
+    </div>
+
+    <div class="sound-wave" id="content">
+      <canvas class="canvas" id="canvas"></canvas>
+    </div>
+    
+    <div class="effects-choice-container">
+      <label class="effects-label">Effects</label>
+      <section class="effect-type">
+
+        <div class="effect-selections" 
+             id="Chorus">
+          <i class="fas fa-power-off" 
+             id="chorus-power" 
+             onclick="chorusEffectToggle()"></i> 
+          <h4>Chorus</h4>
+          <div class="chorus-slider-container">
+            <section>
+              <input type="range" 
+                     min="0" 
+                     max="50" 
+                     value="0" 
+                     step="0.1" 
+                     class="input" 
+                     id="c-frequency">
+              <label>Frequency</label>
+            </section>
+            <section>
+              <input type="range" 
+                     min="2" 
+                     max="50" 
+                     value="2" 
+                     step="0.1" 
+                     class="input" 
+                     id="c-delay-time">
+              <label>Delay</label>
+            </section>
+            <section>
+              <input type="range" 
+                     min="1" 
+                     max="10" 
+                     value="1" 
+                     step="0.1" 
+                     class="input" 
+                     id="c-depth">
+              <label>Depth</label>
+            </section>
+          </div>
+        </div>
+
+        <div class="effect-selections" 
+             id="Tremelo" > 
+          <i class="fas fa-power-off" 
+             id="tremolo-power"
+             onclick="tremoloEffectToggle()"></i> 
+          <h4>Tremelo</h4>
+          <div class="tremolo-slider-container">
+            <section class="two-sliders">
+              <input type="range" 
+                     min="0" 
+                     max="50" 
+                     value="0" 
+                     step=".1" 
+                     class="input" 
+                     id="tremolo-frequency">
+              <label>Frequency</label>
+            </section>
+            <section class="two-sliders">
+              <input type="range" 
+                     min="1" 
+                     max="50" 
+                     value="1" 
+                     step="0.1" 
+                     class="input" 
+                     id="tremolo-depth">
+              <label>Depth</label>
+            </section>
+          </div>
+        </div>
+
+        <div class="effect-selections" 
+             id="Vibrato"> 
+          <i class="fas fa-power-off"
+             id="vibrato-power"
+             onclick="vibratoEffectToggle()"></i> 
+          <h4>Vibrato</h4>
+          <div class="vibrato-slider-container">
+            <section class="two-sliders">
+              <input type="range" 
+                     min="0" 
+                     max="10" 
+                     value="0" 
+                     step=".1" 
+                     class="input" 
+                     id="vibrato-frequency">
+              <label>Frequency</label>
+            </section>
+            <section class="two-sliders">
+              <input type="range" 
+                     min="1" 
+                     max="10" 
+                     value="0" 
+                     step="0.1" 
+                     class="input" 
+                     id="vibrato-depth">
+              <label>Depth</label>
+            </section>
+          </div>
+        </div>
+
+        <div class="effect-selections" 
+             id="Phaser"> 
+          <i class="fas fa-power-off"
+             id="phaser-power"
+             onclick="phaserEffectToggle()"></i> 
+          <h4>Phaser</h4>
+          <div class="phaser-slider-container">
+            <section>
+              <input type="range" 
+                     min="0" 
+                     max="100" 
+                     value="0" 
+                     step=".1" 
+                     class="input" 
+                     id="phaser-frequency">
+              <label>Frequency</label>
+            </section>
+            <section>
+              <input type="range" 
+                     min="0" 
+                     max="4" 
+                     value="0" 
+                     step="1" 
+                     class="input" 
+                     id="phaser-octave">
+              <label>Octaves</label>
+            </section>
+            <section>
+              <input type="range" 
+                     min="0" 
+                     max="2000" 
+                     value="0" 
+                     step="1" 
+                     class="input" 
+                     id="phaser-baseFrequency">
+              <label>Base</label>
+            </section>
+          </div>
+        </div>
+
+        <div class="effect-selections" 
+             id="Reverb"> 
+          <i class="fas fa-power-off"
+             id="reverb-power"
+             onclick="reverbEffectToggle()"></i> 
+          <h4>Reverb</h4>
+          <div class="reverb-slider-container">
+            <section>
+              <input type="range" 
+                     min="0" 
+                     max="0.9" 
+                     value="0" 
+                     step=".01" 
+                     class="input" 
+                     id="reverb-room-size">
+              <label>Room Size</label>
+            </section>
+          </div>
+        </div>
+
+        <div class="effect-selections" 
+             id="Distortion"> 
+          <i class="fas fa-power-off"
+             id="distortion-power"
+             onclick="distortionEffectToggle()"></i> 
+          <h4>Distortion</h4>
+          <div class="distortion-slider-container">
+            <section>
+              <input type="range" 
+                     min="0" 
+                     max="100" 
+                     value="0" 
+                     step=".1" 
+                     class="input" 
+                     id="distortion">
+              <label>Distortion</label>
+            </section>
+          </div>
+        </div>
+
+        <div class="effect-selections" 
+             id="BitCrusher"> 
+          <i class="fas fa-power-off"
+             id="bitCrusher-power"
+             onclick="bitCrusherEffectToggle()"></i> 
+          <h4>BitCrusher</h4>
+          <div class="bitCrusher-slider-container">
+            <section>
+              <input type="range" 
+                     min="1" 
+                     max="8" 
+                     value="1" 
+                     step="1"
+                     class="input" 
+                     id="bitCrusher">
+              <label>Bit</label>
+            </section>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <div class="keyboard-container">
+    <svg >
+      <g>
+        <rect class="white-keys C" x="0" y="0" rx="4" onclick="whiteKeyPress('.C'); determineNote(97)"/>
+        <text class="white-key-position" x="27" y="195">a</text>
+      </g>
+      <g>
+        <rect class="white-keys D" x="63" y="0" rx="4" onclick="whiteKeyPress('.D'); determineNote(115)"/>
+        <text class="white-key-position" x="92" y="195">s</text>
+      </g>
+      <g>
+        <rect class="white-keys E" x="126" y="0" rx="4" onclick="whiteKeyPress('.E'); determineNote(100)"/>
+        <text class="white-key-position" x="153" y="195">d</text>
+      </g>
+      <g>
+        <rect class="white-keys F" x="189" y="0" rx="4" onclick="whiteKeyPress('.F'); determineNote(102)"/>
+        <text class="white-key-position" x="218" y="195">f</text>
+      </g>
+      <g>
+        <rect class="white-keys G" x="252" y="0" rx="4" onclick="whiteKeyPress('.G'); determineNote(103)"/>
+        <text class="white-key-position" x="280" y="195">g</text>
+      </g>
+      <g>
+        <rect class="white-keys A" x="315" y="0" rx="4" onclick="whiteKeyPress('.A'); determineNote(104)"/>
+        <text class="white-key-position" x="342" y="195">h</text>
+      </g>
+      <g>
+        <rect class="white-keys B" x="378" y="0" rx="4" onclick="whiteKeyPress('.B'); determineNote(106)"/>
+        <text class="white-key-position" x="407" y="195">j</text>
+      </g>
+      <g>
+        <rect class="white-keys octave-up-C" x="441" y="0" rx="4" onclick="whiteKeyPress('.octave-up-C'); determineNote(107)"/>
+        <text class="white-key-position" x="470" y="195">k</text>
+      </g>
+      <g>
+        <rect class="white-keys octave-up-D" x="504" y="0" rx="4" onclick="whiteKeyPress('.octave-up-D'); determineNote(108)"/>
+        <text class="white-key-position" x="533" y="195">l</text>
+      </g>
+      <g>
+        <rect class="white-keys octave-up-E" x="567" y="0" rx="4" onclick="whiteKeyPress('.octave-up-E'); determineNote(59)"/>
+        <text class="white-key-position" x="595" y="195">;</text>
+      </g>
+      <g>
+        <rect class="white-keys octave-up-F" x="630" y="0" rx="4" onclick="whiteKeyPress('.octave-up-F'); determineNote(39)"/>
+        <text class="white-key-position" x="660" y="195">'</text>
+      </g>
+
+
+      <g>
+        <rect class="black-keys C-sharp" x="42" y="0" rx="2" onclick="blackKeyPress('.C-sharp'); determineNote(119)"/>
+        <text class="black-key-position" x="56" y="100">w</text>
+      </g>
+      <g>
+        <rect class="black-keys D-sharp" x="105" y="0" rx="2" onclick="blackKeyPress('.D-sharp'); determineNote(101)"/>
+        <text class="black-key-position" x="122" y="100">e</text>
+      </g>
+      <g>
+        <rect class="black-keys F-sharp" x="231" y="0" rx="2" onclick="blackKeyPress('.F-sharp'); determineNote(116)"/>
+        <text class="black-key-position" x="248" y="100">t</text>
+      </g>
+      <g>
+        <rect class="black-keys G-sharp" x="294" y="0" rx="2" onclick="blackKeyPress('.G-sharp'); determineNote(121)"/>
+        <text class="black-key-position" x="310" y="100">y</text>
+      </g>
+      <g>
+        <rect class="black-keys A-sharp" x="357" y="0" rx="2" onclick="blackKeyPress('.A-sharp'); determineNote(117)"/>
+        <text class="black-key-position" x="374" y="100">u</text>
+      </g>
+      <g>
+        <rect class="black-keys octave-up-C-sharp" x="483" y="0" rx="2" onclick="blackKeyPress('.octave-up-C-sharp'); determineNote(111)"/>
+        <text class="black-key-position" x="500" y="100">o</text>
+      </g>
+      <g>
+        <rect class="black-keys octave-up-D-sharp" x="546" y="0" rx="2" onclick="blackKeyPress('.octave-up-D-sharp'); determineNote(112)"/>
+        <text class="black-key-position" x="565" y="100">p</text>
+      </g>
+    </svg>
+
+    <div class="octave-adjustment">
+      <button class="change-octave-btn" type="button" onclick="determineNote(122)">- z</button>
+      <button class="change-octave-btn" type="button" onclick="determineNote(120)">x +</button>
+    </div>
+  </div>
+
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/tone/13.8.10/Tone.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
